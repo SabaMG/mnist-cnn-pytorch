@@ -1,6 +1,6 @@
 data/
 .venv/
-best_model.pthdd
+best_model.pth
 
 __pycache__/
 *.py[cod]
@@ -9,4 +9,5 @@ __pycache__/
 .ipynb_checkpoints/
 
 .vscode/
+.DS_Store/
 .idea/
