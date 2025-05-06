@@ -86,8 +86,7 @@ Trained with:
 
 ## 📌 Notes
 
-- Tested on macOS with Apple Silicon (`mps` backend)
-- You can tweak the model or try other datasets like `FashionMNIST` or `CIFAR10` to go further
+- Tested on macOS with Apple Silicon (`mps` backend) but should work without, it may just be longer.
 
 ---
 
