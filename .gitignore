@@ -1,0 +1,12 @@
+data/
+.venv/
+best_model.pthdd
+
+__pycache__/
+*.py[cod]
+*.so
+
+.ipynb_checkpoints/
+
+.vscode/
+.idea/
