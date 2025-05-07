@@ -4,13 +4,16 @@ import torch.nn as nn
 from evaluate import evaluate
 from config import device
 from torchvision.utils import make_grid
+from torch.optim.lr_scheduler import StepLR
 
 
 def train(model, train_loader, test_loader, optimizer, loss_fn, epochs=30, save_path="best_model.pth"):
     best_accuracy = 0.0
     count = 0
     limit = 12
-    dirName = "CNN_Training"
+    dirName = "cnn_train"
+    
+    scheduler = StepLR(optimizer, step_size=10, gamma=0.1)
 
     writer = SummaryWriter(log_dir="runs/" + dirName)
     for epoch in range(epochs):
@@ -51,5 +54,6 @@ def train(model, train_loader, test_loader, optimizer, loss_fn, epochs=30, save_
         if count > limit:
             print("Early stopping")
             break
+        scheduler.step()
     print("tansorboard logs saved in: ", dirName)
     writer.close()

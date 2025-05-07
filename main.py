@@ -13,9 +13,9 @@ if __name__ == "__main__":
     train_loader, test_loader = get_data_loaders()
     model = CNN().to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=0.0005, weight_decay=1e-4)
-    loss_fn = nn.CrossEntropyLoss()
 
     best_model_path = "best_model.pth"
+    loss_fn = nn.CrossEntropyLoss(label_smoothing=0.1)
     train(model, train_loader, test_loader, optimizer, loss_fn, save_path=best_model_path)
 
     # Load best model and evaluate
