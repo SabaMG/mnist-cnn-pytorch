@@ -1,0 +1,12 @@
+Résultats Multi-Seed - MNIST CNN
+========================================
+Seed 1: 99.68%
+Seed 2: 99.69%
+Seed 3: 99.68%
+Seed 4: 99.67%
+Seed 5: 99.67%
+
+
+🎯 Résumé multi-seed
+→ Moyenne des accuracies: 99.68%
+→ Écart-type: 0.01%

@@ -1,13 +1,31 @@
-data/
-.venv/
-best_model.pth
-
+# === Python bytecode and cache ===
 __pycache__/
 *.py[cod]
 *.so
+*.egg-info/
 
+# === Virtual environment ===
+.venv/
+env/
+venv/
+
+# === Jupyter and notebooks ===
 .ipynb_checkpoints/
 
+# === Data and model files ===
+data/
+*.pth
+*.pt
+best_model.pth
+
+# === TensorBoard logs ===
+runs/
+
+# === OS / Editor files ===
+.DS_Store
+Thumbs.db
 .vscode/
-.DS_Store/
 .idea/
+
+# === Logs ===
+*.log

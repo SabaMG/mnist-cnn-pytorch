@@ -7,15 +7,14 @@ from torchvision.utils import make_grid
 from torch.optim.lr_scheduler import StepLR
 
 
-def train(model, train_loader, test_loader, optimizer, loss_fn, epochs=30, save_path="best_model.pth"):
+def train(model, train_loader, test_loader, optimizer, loss_fn, epochs=30, save_path="best_model.pth", log_dir="cnn_train"):
     best_accuracy = 0.0
     count = 0
     limit = 12
-    dirName = "cnn_train"
     
     scheduler = StepLR(optimizer, step_size=10, gamma=0.1)
 
-    writer = SummaryWriter(log_dir="runs/" + dirName)
+    writer = SummaryWriter(log_dir="runs/" + log_dir)
     for epoch in range(epochs):
         model.train()
         total_loss = 0
@@ -55,5 +54,5 @@ def train(model, train_loader, test_loader, optimizer, loss_fn, epochs=30, save_
             print("Early stopping")
             break
         scheduler.step()
-    print("tansorboard logs saved in: ", dirName)
+    print("tansorboard logs saved in: ", log_dir)
     writer.close()
