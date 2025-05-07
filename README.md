@@ -2,7 +2,7 @@
 
 This project implements a high-accuracy digit classification model on the MNIST dataset using modern deep learning techniques in **PyTorch**.
 
-> 🎯 Final test accuracy: **99.48%** (with data augmentation + CNN + regularization)
+> 🎯 Final test accuracy: **99.59%** (with 4-layer CNN + data augmentation + regularization)
 
 ---
 
@@ -13,6 +13,7 @@ This project implements a high-accuracy digit classification model on the MNIST 
 - ✅ Data Augmentation for improved generalization  
 - ✅ Training reproducibility with fixed random seeds  
 - ✅ Best-model saving during training (checkpointing)  
+- ✅ TensorBoard logging for metrics and visualizations  
 - ✅ MPS backend support for Apple Silicon (e.g., M3 Max)
 
 ---
@@ -22,10 +23,16 @@ This project implements a high-accuracy digit classification model on the MNIST 
 ```
 .
 ├── data/               # MNIST dataset (auto-downloaded)
-├── main.py             # Main training & evaluation logic
-├── model.py            # CNN architecture with batchnorm & dropout
-├── utils.py            # Helpers (e.g., seed setting, model save/load)
-├── best_model.pth      # Saved weights of the best model (optional)
+├── model.py            # CNN architecture
+├── train.py            # Training loop
+├── evaluate.py         # Evaluation logic
+├── dataset.py          # Data loading and transforms
+├── utils.py            # Helpers (seed, weight init, etc.)
+├── config.py           # Configs (device, paths, etc.)
+├── main.py             # Main launcher
+├── requirements.txt    # Dependencies
+├── best_model.pth      # (optional) Best saved model
+├── runs/               # TensorBoard logs
 └── README.md
 ```
 
@@ -54,39 +61,66 @@ pip install -r requirements.txt
 python main.py
 ```
 
-The best model is saved automatically as `best_model.pth`.
+The best model will be saved automatically as `best_model.pth`.
+
+### 4. Launch TensorBoard (optional)
+
+```bash
+tensorboard --logdir=runs
+```
+
+Then open [http://localhost:6006](http://localhost:6006) in your browser.
 
 ---
 
-## 🧾 Results
+## 📊 Model Comparison (Architectures)
+
+| Model Name           | Conv Layers | Pooling Strategy     | Final Accuracy | Max Accuracy | Training Time (approx.) | Notes                                      |
+|----------------------|-------------|-----------------------|----------------|--------------|--------------------------|--------------------------------------------|
+| `mnist_cnn_baseline` | 2           | MaxPool               | 99.41%         | 99.48%       | ★★★☆☆                   | Baseline simple, robuste et efficace       |
+| `cnn_v1_deep_3conv`  | 3           | MaxPool               | **99.48%**         | **99.58%**       | ★★★★☆                   | Meilleure performance globale              |
+| `cnn_v2_deep_3conv`  | 3           | MaxPool               | 99.45%         | 99.55%       | ★★★★☆                   | Très proche du meilleur, stable            |
+| `CNN_3Conv_Stride`   | 3           | Strided Convolutions  | 99.38%         | 99.48%       | ★★☆☆☆                   | Le plus rapide à entraîner                 |
+| `CNN_4Conv`          | 4           | MaxPool               | 99.59%         | 99.59%       | ★★★★★                   | Lourd, long à entraîner mais performant    |
+
+> 🧪 *Training time scale:*  
+> ★☆☆☆☆ = very fast — ★★★★★ = long training
+
+---
+
+## 📈 Final Results
 
 | Epochs | Accuracy | Loss     |
 |--------|----------|----------|
-| 30     | 99.48%   | ~45      |
+| 30     | **99.58%**   | ~42      |
 
 Trained with:
-- CNN (2 conv layers + 2 FC layers)
+- CNN (up to 3 convolutional layers)
 - Dropout 0.3
-- BatchNorm
+- Batch Normalization
 - AdamW optimizer
-- Seeded runs
-- Data augmentation (rotation, affine shift)
+- Data augmentation: rotation + affine shift
+- Early stopping + best model checkpoint
+- Reproducibility: fixed random seed
+- TensorBoard visual logging
 
 ---
 
 ## 🛠️ Dependencies
 
-- Python 3.8+
+- Python 3.11
 - torch
 - torchvision
 - numpy
-- matplotlib (optional for plotting)
+- matplotlib *(optional)*
+- tensorboard *(optional)*
 
 ---
 
 ## 📌 Notes
 
-- Tested on macOS with Apple Silicon (`mps` backend) but should work without, it may just be longer.
+- Optimized for macOS with Apple Silicon (`mps` backend), but works on CPU and CUDA as well.
+- You can switch model versions by editing the architecture inside `model.py`.
 
 ---
 
