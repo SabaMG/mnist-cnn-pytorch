@@ -7,6 +7,7 @@ import torch.nn as nn
 import torch
 from config import device
 import numpy as np
+import shutil
 
 if __name__ == "__main__":
     print(f"Using device: {device}")
@@ -35,6 +36,15 @@ if __name__ == "__main__":
         print(f"\n📦 Final evaluation for seed {seed}:")
         acc = evaluate(model, test_loader)
         accuracies.append(acc)
+        
+    # === Sauvegarde du meilleur modèle global ===
+    best_index = np.argmax(accuracies)
+    best_seed = seeds[best_index]
+    best_model_file = f"best_model_seed_{best_seed}.pth"
+
+    # Copy to main model path
+    shutil.copyfile(best_model_file, "best_model.pth")
+    print(f"✅ Best model (seed {best_seed}) saved as best_model.pth with accuracy: {accuracies[best_index]:.2f}%")
         
         
     # === Résumé global ===
